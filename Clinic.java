@@ -4,6 +4,251 @@ import javax.xml.ws.Response;
 
 public class Clinic 
 {
+	private void addPet(Pet basePet, Pet otherPet1, Pet otherPet2, Pet otherPet3)
+	{
+		Scanner keyboard = new Scanner(System.in);
+
+		String name = "";
+		String type = "";
+		String size = "";
+		Double weight = 0.00;
+		int age = 0;
+		int check = 0;
+		
+		while (check == 0)
+		{
+			System.out.println("What is your pets name?");
+			name = keyboard.nextLine();
+			
+			if (name.equalsIgnoreCase(otherPet1.getName()) || name.equalsIgnoreCase(otherPet2.getName()) || name.equalsIgnoreCase(otherPet3.getName()))
+			{
+				System.out.println("This pet already exists.");
+				check = 0;
+			}
+			else 
+			{
+				basePet.setName(name);
+				check = 1;
+			}
+		}
+		check = 0;
+				
+		while (check == 0)
+		{
+			System.out.println("Is your pet a cat or a dog?");
+			type = keyboard.nextLine();
+				
+			if (type.equalsIgnoreCase("dog"))
+			{
+				basePet.setType("Dog");
+				check = 1;
+			}
+			else if (type.equalsIgnoreCase("cat"))
+			{
+				basePet.setType("Cat");
+				check = 1;
+			}
+			else
+			{
+				System.out.println("Invalid pet type. Please try again. ");
+				System.out.println("------------------------------------------------------------");
+				check = 0;
+			}
+		}
+		check = 0;
+		
+		while (check == 0)
+		{
+			System.out.println("What size is your pet? Small, medium or large?");
+			size = keyboard.nextLine();
+				
+			if (size.equalsIgnoreCase("small"))
+			{
+				basePet.setSize("Small");
+				check = 1;
+			}
+			else if (size.equalsIgnoreCase("medium"))
+			{
+				basePet.setSize("Medium");					
+				check = 1;
+			}
+			else if(size.equalsIgnoreCase("large"))
+			{
+				basePet.setSize("Large");
+				check = 1;
+			}
+			else
+			{
+				System.out.println("Invalid pet size. Please try again.");
+				System.out.println("------------------------------------------------------------");
+				check = 0;
+			}
+		}
+		check = 0;
+		
+		while (check == 0)
+		{
+			System.out.println("What is your pet's weight in kilograms?");
+			weight = keyboard.nextDouble();
+			
+			if (weight>0)
+			{
+				basePet.setWeight(weight);
+				check = 1;
+			}
+			else
+			{
+				System.out.println("Error. Please input a positive number.");
+				System.out.println("------------------------------------------------------------");				
+				check = 0;
+			}
+		}
+		check = 0;
+		
+		while (check == 0)
+		{
+			System.out.println("How old is " + basePet.getName()+"?");
+			age = keyboard.nextInt();
+			
+			if (age>0)
+			{
+				basePet.setAge(age);
+				check = 1;
+			}
+			else
+			{
+				System.out.println("Error. Please input a positive number.");
+				System.out.println("------------------------------------------------------------");				
+				check = 0;
+			}
+		}
+		basePet.setPetDoctor("No Doctor Assigned");
+	
+	
+	}
+
+	private void doctorAssign(Doctor doctor1, Doctor doctor2, Pet petAssign)
+	{
+		Scanner keyboard = new Scanner(System.in);
+		
+		String responseDoctorAssign = "";
+		String responseChangeDoctor = "";
+		int check = 0;
+		int check2 = 0;
+		
+
+		check2 = 1;
+
+		if (petAssign.getPetDoctor().equalsIgnoreCase("No Doctor Assigned"))
+		{
+			check = 0;
+
+			while (check == 0)
+			{
+				System.out.println("Which doctor would you like to assign " +petAssign.getName() +" to?");
+				System.out.println("A. "+doctor1.getName());
+				System.out.println("B. "+doctor2.getName());
+				System.out.println("Cancel");
+				responseDoctorAssign = keyboard.nextLine();
+
+				if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
+				{
+					if(petAssign.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
+					{
+						petAssign.setPetDoctor(responseDoctorAssign);
+						check = 1;
+					}
+					else
+					{
+						System.out.println("Your chosen doctor is not qualified for " +petAssign.getType()+"s. Please Try again.");
+						check = 0;
+					}
+				}	
+				else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
+				{
+					if(petAssign.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
+					{
+						petAssign.setPetDoctor(responseDoctorAssign);
+						check = 1;
+					}
+					else
+					{
+						System.out.println("Your chosen doctor is not qualified for " +petAssign.getType()+"s. Please try again.");
+						check = 0;
+					}
+				}
+				else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
+				{
+					check = 1;
+				}
+				else 
+				{
+					System.out.println("This doctor does not exist.");
+					check = 0;
+				}
+			}
+		}
+		else
+		{
+		System.out.println(petAssign.getName()+" already has "+petAssign.getPetDoctor()+" assigned. Would you like to change doctors? Yes or No?");
+		responseChangeDoctor = keyboard.nextLine();
+
+			if (responseChangeDoctor.equalsIgnoreCase("No"))
+			{
+				System.out.println(petAssign.getName()+"'s doctor will remain as " +petAssign.getPetDoctor());
+			}
+			else if (responseChangeDoctor.equalsIgnoreCase("Yes"))
+			{
+				check = 0;
+
+				while (check == 0)
+				{
+					System.out.println("Which doctor would you like to assign " +petAssign.getName() +" to?");
+					System.out.println("A. "+doctor1.getName());
+					System.out.println("B. "+doctor2.getName());
+					System.out.println("Cancel");
+					responseDoctorAssign = keyboard.nextLine();
+
+					if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
+					{
+						if(petAssign.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
+						{
+							petAssign.setPetDoctor(responseDoctorAssign);	
+							check = 1;
+						}
+						else
+						{
+							System.out.println("Your chosen doctor is not qualified for " +petAssign.getType()+"s. Please Try again.");
+							check = 0;
+						}
+					}
+					else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
+					{
+						if(petAssign.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
+						{
+							petAssign.setPetDoctor(responseDoctorAssign);
+							check = 1;
+						}
+						else
+						{
+							System.out.println("Your chosen doctor is not qualified for " +petAssign.getType()+"s. Please try again.");
+							check = 0;
+						}
+					}
+					else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
+					{
+						check = 1;
+					}
+					else 
+					{
+						System.out.println("This doctor does not exist.");
+						check = 0;
+					}
+				}	
+			}
+		}
+	
+	}
 	
 	private void run() 
 	{
@@ -12,6 +257,7 @@ public class Clinic
 		//initialise Check
 		int check = 0;
 		int check2 = 0;
+		
 		//Initialise Count
 		int count = 0;
 		
@@ -22,8 +268,6 @@ public class Clinic
 		String responsePrintDoctor = "";
 		String responsePrintPet = "";
 		String responsePetAssign = "";
-		String responseDoctorAssign = "";
-		String responseChangeDoctor = "";
 		String responseAnalyse = "";
 		String responseDoctorPetList = "";
 		String name = "";
@@ -37,12 +281,17 @@ public class Clinic
 		//Initialise Pets
 		Pet pet1= new Pet();
 		pet1.setNameDefault();
+		pet1.setPetDoctor("No Doctor Assigned");
 		Pet pet2 = new Pet();
 		pet2.setNameDefault();
+		pet2.setPetDoctor("No Doctor Assigned");
 		Pet pet3 = new Pet();
 		pet3.setNameDefault();
+		pet3.setPetDoctor("No Doctor Assigned");
 		Pet pet4 = new Pet();
 		pet4.setNameDefault();
+		pet4.setPetDoctor("No Doctor Assigned");
+		
 		
 		//Main Loop
 		while (count < 100)
@@ -118,87 +367,19 @@ public class Clinic
 			{
 				if (pet1.getName().equalsIgnoreCase(""))
 				{
-					check = 0;
-					
-					while (check == 0)
-					{
-						System.out.println("What is your pets name?");
-						name = keyboard.nextLine();
-						
-						if (name.equalsIgnoreCase(pet2.getName()) || name.equalsIgnoreCase(pet3.getName()) || name.equalsIgnoreCase(pet4.getName()))
-						{
-							System.out.println("This pet already exists.");
-							check = 0;
-						}
-						else 
-						{
-							pet1.addPet(name);
-							check = 1;
-						}
-					}
+					addPet(pet1, pet2, pet3, pet4);
 				}
 				else if (pet2.getName().equalsIgnoreCase(""))
 				{
-					check = 0;
-					
-					while (check == 0)
-					{
-						System.out.println("What is your pets name?");
-						name = keyboard.nextLine();
-						
-						if (name.equalsIgnoreCase(pet1.getName()) || name.equalsIgnoreCase(pet3.getName()) || name.equalsIgnoreCase(pet4.getName()))
-						{
-							System.out.println("This pet already exists.");
-							check = 0;
-						}	
-						else 
-						{
-							pet2.addPet(name);
-							check = 1;
-						}
-					}
+					addPet(pet2, pet1, pet3, pet4);
 				}
 				else if (pet3.getName().equalsIgnoreCase(""))
 				{
-					check = 0; 
-					
-					while (check == 0)
-					{
-						System.out.println("What is your pets name?");
-						name = keyboard.nextLine();
-						
-						if (name.equalsIgnoreCase(pet1.getName()) || name.equalsIgnoreCase(pet2.getName()) || name.equalsIgnoreCase(pet4.getName()))
-						{
-							System.out.println("This pet already exists.");
-							check = 0;
-						}
-						else 
-						{
-							pet3.addPet(name);
-							check = 1;
-						}
-					}
+					addPet(pet3, pet1, pet2, pet4);
 				}
 				else if (pet4.getName().equalsIgnoreCase(""))
 				{
-					check = 0;
-					
-					while (check == 0)
-					{
-						System.out.println("What is your pets name?");
-						name = keyboard.nextLine();
-						
-						if (name.equalsIgnoreCase(pet1.getName()) || name.equalsIgnoreCase(pet2.getName()) || name.equalsIgnoreCase(pet3.getName()))
-						{
-							System.out.println("This pet already exists.");
-							check = 0;
-						}
-						else 
-						{
-							pet4.addPet(name);
-							check = 1;
-						}
-					}
+					addPet(pet4, pet1, pet2, pet3);
 				}
 				else
 				{
@@ -220,455 +401,23 @@ public class Clinic
 	
 					if (responsePetAssign.equalsIgnoreCase(pet1.getName())||responsePetAssign.equalsIgnoreCase("A"))
 					{
+						doctorAssign(doctor1, doctor2, pet1);
 						check2 = 1;
-		
-						if (pet1.getPetDoctor().equalsIgnoreCase("No Doctor Assigned"))
-						{
-							check = 0;
-	
-							while (check == 0)
-							{
-								System.out.println("Which doctor would you like to assign " +pet1.getName() +" to?");
-								System.out.println("A. "+doctor1.getName());
-								System.out.println("B. "+doctor2.getName());
-								System.out.println("Cancel");
-								responseDoctorAssign = keyboard.nextLine();
-
-								if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-								{
-									if(pet1.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-									{
-										pet1.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet1.getType()+"s. Please Try again.");
-										check = 0;
-									}
-								}	
-								else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-								{
-									if(pet1.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-									{
-										pet1.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet1.getType()+"s. Please try again.");
-										check = 0;
-									}
-								}
-								else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-								{
-									check = 1;
-								}
-								else 
-								{
-									System.out.println("This doctor does not exist.");
-									check = 0;
-								}
-							}
-						}
-						else
-						{
-						System.out.println(pet1.getName()+" already has "+pet1.getPetDoctor()+" assigned. Would you like to change doctors? Yes or No?");
-						responseChangeDoctor = keyboard.nextLine();
-
-							if (responseChangeDoctor.equalsIgnoreCase("No"))
-							{
-								System.out.println(pet1.getName()+"'s doctor will remain as " +pet1.getPetDoctor());
-							}
-							else if (responseChangeDoctor.equalsIgnoreCase("Yes"))
-							{
-								check = 0;
-
-								while (check == 0)
-								{
-									System.out.println("Which doctor would you like to assign " +pet1.getName() +" to?");
-									System.out.println("A. "+doctor1.getName());
-									System.out.println("B. "+doctor2.getName());
-									System.out.println("Cancel");
-									responseDoctorAssign = keyboard.nextLine();
-
-									if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-									{
-										if(pet1.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-										{
-											pet1.setPetDoctor(responseDoctorAssign);	
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet1.getType()+"s. Please Try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-									{
-										if(pet1.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-										{
-											pet1.setPetDoctor(responseDoctorAssign);
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet1.getType()+"s. Please try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-									{
-										check = 1;
-									}
-									else 
-									{
-										System.out.println("This doctor does not exist.");
-										check = 0;
-									}
-								}	
-							}
-						}
 					}	
 					else if (responsePetAssign.equalsIgnoreCase(pet2.getName())||responsePetAssign.equalsIgnoreCase("B"))
 					{
+						doctorAssign(doctor1, doctor2, pet2);
 						check2 = 1;
-
-						if (pet2.getPetDoctor().equalsIgnoreCase("No Doctor Assigned"))
-						{
-							check = 0;
-
-							while (check == 0)
-							{
-								System.out.println("Which doctor would you like to assign " +pet2.getName() +" to?");
-								System.out.println("A. "+doctor1.getName());
-								System.out.println("B. "+doctor2.getName());
-								System.out.println("Cancel");
-								responseDoctorAssign = keyboard.nextLine();
-
-								if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-								{
-									if(pet2.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-									{
-										pet2.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet2.getType()+"s. Please Try again.");
-										check = 0;
-									}
-								}
-								else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-								{
-									if(pet2.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-									{
-										pet2.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet2.getType()+"s. Please try again.");
-										check = 0;
-									}
-								}
-								else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-								{
-									check = 1;
-								}
-								else 
-								{
-									System.out.println("This doctor does not exist.");
-									check = 0;
-								}
-							}
-						}
-						else
-						{
-							System.out.println(pet2.getName()+" already has "+pet2.getPetDoctor()+" assigned. Would you like to change doctors? Yes or No?");
-							responseChangeDoctor = keyboard.nextLine();
-
-							if (responseChangeDoctor.equalsIgnoreCase("No"))
-							{
-								System.out.println(pet2.getName()+"'s doctor will remain as " +pet2.getPetDoctor());
-							}	
-							else if (responseChangeDoctor.equalsIgnoreCase("Yes"))
-							{
-								check = 0;
-
-								while (check == 0)
-								{
-									System.out.println("Which doctor would you like to assign " +pet1.getName() +" to?");
-									System.out.println("A. "+doctor1.getName());
-									System.out.println("B. "+doctor2.getName());
-									System.out.println("Cancel");
-									responseDoctorAssign = keyboard.nextLine();
-
-									if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-									{
-										if(pet2.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-										{
-											pet2.setPetDoctor(responseDoctorAssign);
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet2.getType()+"s. Please Try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-									{
-										if(pet2.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-										{
-											pet2.setPetDoctor(responseDoctorAssign);
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet2.getType()+"s. Please try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-									{
-										check = 1;
-									}
-									else 
-									{
-										System.out.println("This doctor does not exist.");
-										check = 0;
-									}
-								}
-							}
-						}
 					}
 					else if (responsePetAssign.equalsIgnoreCase(pet3.getName())||responsePetAssign.equalsIgnoreCase("C"))
 					{
+						doctorAssign(doctor1, doctor2, pet3);
 						check2 = 1;
-	
-						if (pet3.getPetDoctor().equalsIgnoreCase("No Doctor Assigned"))
-						{
-							check = 0;
-
-							while (check == 0)
-							{
-								System.out.println("Which doctor would you like to assign " +pet3.getName() +" to?");
-								System.out.println("A. "+doctor1.getName());
-								System.out.println("B. "+doctor2.getName());
-								System.out.println("Cancel");
-								responseDoctorAssign = keyboard.nextLine();
-	
-								if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-								{
-									if(pet3.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-									{
-										pet3.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet3.getType()+"s. Please Try again.");
-										check = 0;
-									}
-								}	
-								else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-								{
-									if(pet3.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-									{
-										pet3.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet3.getType()+"s. Please try again.");
-										check = 0;
-									}
-								}
-								else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-								{
-									check = 1;
-								}
-								else 
-								{
-									System.out.println("This doctor does not exist.");
-									check = 0;
-								}
-							}
-						}
-						else
-						{
-							System.out.println(pet3.getName()+" already has "+pet3.getPetDoctor()+" assigned. Would you like to change doctors? Yes or No?");
-							responseChangeDoctor = keyboard.nextLine();
-
-							if (responseChangeDoctor.equalsIgnoreCase("No"))
-							{
-								System.out.println(pet3.getName()+"'s doctor will remain as " +pet3.getPetDoctor());
-							}
-							else if (responseChangeDoctor.equalsIgnoreCase("Yes"))
-							{
-								check = 0;
-
-								while (check == 0)
-								{
-									System.out.println("Which doctor would you like to assign " +pet3.getName() +" to?");
-									System.out.println("A. "+doctor1.getName());
-									System.out.println("B. "+doctor2.getName());
-									System.out.println("Cancel");
-									responseDoctorAssign = keyboard.nextLine();
-
-									if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-									{
-										if(pet3.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-										{
-											pet3.setPetDoctor(responseDoctorAssign);	
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet3.getType()+"s. Please Try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-									{
-										if(pet3.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-										{
-											pet3.setPetDoctor(responseDoctorAssign);
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet3.getType()+"s. Please try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-									{
-										check = 1;
-									}
-									else 
-									{
-										System.out.println("This doctor does not exist.");
-										check = 0;
-									}
-								}	
-							}
-						}
 					}
 					else if (responsePetAssign.equalsIgnoreCase(pet4.getName())||responsePetAssign.equalsIgnoreCase("D"))
 					{
+						doctorAssign(doctor1, doctor2, pet4);
 						check2 = 1;
-		
-						if (pet4.getPetDoctor().equalsIgnoreCase("No Doctor Assigned"))
-						{
-							check = 0;
-	
-							while (check == 0)
-							{
-								System.out.println("Which doctor would you like to assign " +pet4.getName() +" to?");
-								System.out.println("A. "+doctor1.getName());
-								System.out.println("B. "+doctor2.getName());
-								System.out.println("Cancel");
-								responseDoctorAssign = keyboard.nextLine();
-
-								if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-								{
-									if(pet4.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-									{
-										pet4.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet4.getType()+"s. Please Try again.");
-										check = 0;
-									}
-								}	
-								else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-								{
-									if(pet1.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-									{
-										pet4.setPetDoctor(responseDoctorAssign);
-										check = 1;
-									}
-									else
-									{
-										System.out.println("Your chosen doctor is not qualified for " +pet4.getType()+"s. Please try again.");
-										check = 0;
-									}
-								}
-								else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-								{
-									check = 1;
-								}
-								else 
-								{
-									System.out.println("This doctor does not exist.");
-									check = 0;
-								}
-							}
-						}
-						else
-						{
-							System.out.println(pet1.getName()+" already has "+pet4.getPetDoctor()+" assigned. Would you like to change doctors? Yes or No?");
-							responseChangeDoctor = keyboard.nextLine();
-
-							if (responseChangeDoctor.equalsIgnoreCase("No"))
-							{
-								System.out.println(pet1.getName()+"'s doctor will remain as " +pet4.getPetDoctor());
-							}
-							else if (responseChangeDoctor.equalsIgnoreCase("Yes"))
-							{
-								check = 0;
-
-								while (check == 0)
-								{
-									System.out.println("Which doctor would you like to assign " +pet4.getName() +" to?");
-									System.out.println("A. "+doctor1.getName());
-									System.out.println("B. "+doctor2.getName());
-									System.out.println("Cancel");
-									responseDoctorAssign = keyboard.nextLine();
-
-									if (responseDoctorAssign.equalsIgnoreCase(doctor1.getName()))
-									{
-										if(pet4.getType().equalsIgnoreCase(doctor1.getSpecialisation()))
-										{
-											pet4.setPetDoctor(responseDoctorAssign);	
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet4.getType()+"s. Please Try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase(doctor2.getName()))
-									{
-										if(pet4.getType().equalsIgnoreCase(doctor2.getSpecialisation()))
-										{
-											pet4.setPetDoctor(responseDoctorAssign);
-											check = 1;
-										}
-										else
-										{
-											System.out.println("Your chosen doctor is not qualified for " +pet4.getType()+"s. Please try again.");
-											check = 0;
-										}
-									}
-									else if (responseDoctorAssign.equalsIgnoreCase("cancel"))
-									{
-										check = 1;
-									}
-									else 
-									{
-										System.out.println("This doctor does not exist.");
-										check = 0;
-									}
-								}	
-							}
-						}
 					}	
 					else
 					{
@@ -758,13 +507,75 @@ public class Clinic
 						
 						if (responseDeleteDoctor.equalsIgnoreCase(doctor1.getName()) || responseDeleteDoctor.equalsIgnoreCase("A"))
 						{
-							doctor1.deleteDoctor();
 							check = 1;
+							int petCount = 0;
+							String printPetAssign = "";
+							
+							if (pet1.getPetDoctor().equals(doctor1.getName()))
+							{
+								pet1.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet1.getName() + "\n";
+								petCount++;
+							}
+							if (pet2.getPetDoctor().equals(doctor1.getName()))
+							{
+								pet2.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet2.getName() + "\n";
+								petCount++;
+							}
+							if (pet3.getPetDoctor().equals(doctor1.getName()))
+							{
+								pet3.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet3.getName() + "\n";
+								petCount++;
+							}
+							if (pet4.getPetDoctor().equals(doctor1.getName()))
+							{
+								pet4.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet4.getName() + "\n";
+								petCount++;
+							}
+							if (petCount > 0)
+							{
+								System.out.println("The following pets have no doctor assigned: \n"+printPetAssign);
+							}
+							doctor1.deleteDoctor();
 						}
 						else if (responseDeleteDoctor.equalsIgnoreCase(doctor2.getName()) || responseDeleteDoctor.equalsIgnoreCase("B"))
 						{
-							doctor2.deleteDoctor();
 							check = 1;
+							int petCount = 0;
+							String printPetAssign = "";
+							
+							if (pet1.getPetDoctor().equals(doctor2.getName()))
+							{
+								pet1.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet1.getName() + "\n";
+								petCount++;
+							}
+							if (pet2.getPetDoctor().equals(doctor2.getName()))
+							{
+								pet2.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet2.getName() + "\n";
+								petCount++;
+							}
+							if (pet3.getPetDoctor().equals(doctor2.getName()))
+							{
+								pet3.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet3.getName() + "\n ";
+								petCount++;
+							}
+							if (pet4.getPetDoctor().equals(doctor2.getName()))
+							{
+								pet4.setPetDoctor("No Doctor Assigned");
+								printPetAssign = printPetAssign + pet4.getName() + "\n";
+								petCount++;
+							}
+							if (petCount > 0)
+							{
+								System.out.println("The following pets have no doctor assigned: \n"+printPetAssign);
+							}
+							doctor2.deleteDoctor();
 						}
 						else if (responseDeleteDoctor.equalsIgnoreCase("cancel") || responseDeleteDoctor.equalsIgnoreCase("C"))
 						{
@@ -927,24 +738,100 @@ public class Clinic
 			}	
 			else if (responseMain.equalsIgnoreCase("I"))
 			{
-				System.out.println("Which doctor would you like to print pet information for?");
-				System.out.println("A. " +doctor1.getName());
-				System.out.println("B. " +doctor2.getName());
-				responseDoctorPetList = keyboard.nextLine();
-				
+				check = 0;
+
 				if ((doctor1.getName() == "")&&(doctor2.getName()==""))
 				{
 					System.out.println("There are no doctors in the system.");
 				}
-				else if (responseDoctorPetList.equalsIgnoreCase("A")|| responseDoctorPetList.equalsIgnoreCase(doctor1.getName()))
+				else
 				{
-					System.out.println("The pets under "+doctor1.getName() + "'s care are:");
 					
-					if(pet1.getPetDoctor().equalsIgnoreCase(doctor1.getName()))
+					while (check == 0)
 					{
+						System.out.println("Which doctor would you like to print pet information for?");
+						System.out.println("A. " +doctor1.getName());
+						System.out.println("B. " +doctor2.getName());
+						responseDoctorPetList = keyboard.nextLine();
 						
+						if (responseDoctorPetList.equalsIgnoreCase("A")|| responseDoctorPetList.equalsIgnoreCase(doctor1.getName()))
+						{
+							check = 1;
+							String doctorPrintOut = "";
+							int petCount = 0;
+							
+							if (pet1.getPetDoctor().equalsIgnoreCase(doctor1.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet1.getName() + "\n";
+								petCount++;		
+							}
+							if (pet2.getPetDoctor().equalsIgnoreCase(doctor1.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet2.getName() + "\n";
+								petCount++;	
+							}
+							if (pet3.getPetDoctor().equalsIgnoreCase(doctor1.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet3.getName() + "\n";
+								petCount++;	
+							}
+							if (pet4.getPetDoctor().equalsIgnoreCase(doctor1.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet4.getName() + "\n";
+								petCount++;	
+							}
+							if(petCount > 0)
+							{
+								System.out.println("The pets under " +doctor1.getName() +"'s care are:");
+								System.out.println(doctorPrintOut);
+							}
+							else
+							{
+								System.out.println("There are no pets under "+doctor1.getName() +"'s care.");
+							}
+						}
+						else if (responseDoctorPetList.equalsIgnoreCase("B")|| responseDoctorPetList.equalsIgnoreCase(doctor2.getName()))
+						{
+							check = 1;
+							String doctorPrintOut = "";
+							int petCount = 0;
+							
+							if (pet1.getPetDoctor().equalsIgnoreCase(doctor2.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet1.getName() + "\n";
+								petCount++;		
+							}
+							if (pet2.getPetDoctor().equalsIgnoreCase(doctor2.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet2.getName() + "\n";
+								petCount++;	
+							}
+							if (pet3.getPetDoctor().equalsIgnoreCase(doctor2.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet3.getName() + "\n";
+								petCount++;	
+							}
+							if (pet4.getPetDoctor().equalsIgnoreCase(doctor2.getName()))
+							{
+								doctorPrintOut = doctorPrintOut + pet4.getName() + "\n";
+								petCount++;	
+							}
+							if(petCount > 0)
+							{
+								System.out.println("The pets under " +doctor2.getName() +"'s care are:");
+								System.out.println(doctorPrintOut);
+							}
+							else
+							{
+								System.out.println("There are no pets under "+doctor2.getName() +"'s care.");
+							}
+						}
+						else
+						{
+							check = 0;
+							System.out.println("Doctor does not exist.");
+						}
 					}
-					
 				}
 			}
 			System.out.println("-------------------------------------------------------------");
