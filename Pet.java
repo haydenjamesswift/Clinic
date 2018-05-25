@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Pet {
 
 	private String type; 	// the type of the pet. It can be only â€œcatâ€ or â€œdogâ€.
@@ -9,9 +7,27 @@ public class Pet {
 	private int age; 		//the age of the pet.
 	private String petDoctor;  // the doctor of the pet.
 	
-	//Boolean Responses
-	private String yes = "yes";
-	private String no = "no";
+	//Basic Pet Constructor
+	public Pet()
+	{
+		this.name = "";
+		this.type = "";
+		this.size = "";
+		this.weight = 0;
+		this.age = 0;
+		this.petDoctor = "No Doctor Assigned";
+	}
+	
+	//New Pet Constructor
+	public void setInfo(String name, String type, String size, int weight, int age, String petDoctor)
+	{
+		this.name = name;
+		this.type = type;
+		this.size = size;
+		this.weight = weight;
+		this.age = age;
+		this.petDoctor = petDoctor;
+	}
 	
 	// Set Pet Type
 	public void setType(String type)
@@ -40,13 +56,7 @@ public class Pet {
 	//Set Pet Name
 	public void setName(String name)
 	{
-		this.name = name;	
-	}
-	
-	//Set Name Default
-	public void setNameDefault()
-	{
-		this.name = "";
+		this.name = name;
 	}
 	
 	//Get Pet Name
@@ -90,17 +100,6 @@ public class Pet {
 	public String getPetDoctor()
 	{
 		return petDoctor;
-	}
-	
-	//Add Pet Method
-	public void addPet(String name)
-	{
-		this.setType();
-		this.setName(name);
-		this.setSize(size);
-		this.setWeight();
-		this.setAge();
-		this.setPetDoctor("No Doctor Assigned");
 	}
 	
 	//Delete Pet Method
@@ -175,8 +174,12 @@ public class Pet {
 		System.out.println("Weight: " +this.getWeight() + " kilograms.");
 		System.out.println("Age: "+this.getAge()+" years.");
 		System.out.println("Doctor: "+this.getPetDoctor());
+
+
+
 	}
 }
 
 	
+
 
