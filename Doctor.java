@@ -1,21 +1,26 @@
-import java.util.Scanner;
+public class Doctor{
 
-public class Doctor {
-
-	public String name; 	
-	private String specialisationText; 	
+	public String name; 		
 	private String specialisation;
 	
-	// Set Doctors Name
+	// Add a New Doctor
+	public Doctor()
+	{
+		this.name = "";
+		this.specialisation = "";
+	}
+	
+	// Set Doctor Information
+	public void setInfo(String name, String specialisationText)
+	{
+		this.name = name;
+		this.specialisation = specialisationText;
+	}
+	
+	//Set Doctors Name
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-	
-	//Set Name Default
-	public void setNameDefault()
-	{
-		this.name = "";
 	}
 	
 	//Return Doctors Name
@@ -25,46 +30,15 @@ public class Doctor {
 	}
 	
 	//Set Doctors Specialisation
-	public void setSpecialisation()
-	{
-		Scanner keyboard = new Scanner(System.in);
-		int check = 0;
-		
-		while (check == 0)
-		{
-			System.out.println("What is your doctors specialisation?");
-			specialisationText = keyboard.nextLine();
-			
-			if (specialisationText.equalsIgnoreCase("dog"))
-			{
-				this.specialisation = "Dog";
-				check=1;
-			}
-			else if (specialisationText.equalsIgnoreCase("cat"))
-			{
-				this.specialisation = "Cat";
-				check = 1;
-			}
-			else
-			{
-				System.out.println("Please input valid pet type.");
-				System.out.println("------------------------------------------------------------");
-				check = 0;
-			}
-		}
+	public void setSpecialisation(String specialisationText)
+	{	
+		this.specialisation = specialisationText;
 	}
 
 	//Return Doctors Specialisation
 	public String getSpecialisation()
 	{
 		return specialisation;
-	}
-	
-	//Add Doctor Method
-	public void addDoctor(String name)
-	{
-		this.setName(name);
-		this.setSpecialisation();
 	}
 	
 	//Delete Doctor Method
