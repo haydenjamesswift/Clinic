@@ -88,9 +88,30 @@ public class Clinic
 			{
 				responseValue = i;
 			}
+			else
+			{
+				responseValue = -1;
+			}
 		}
 		return responseValue;
 	}
+	
+	public boolean errorCheck(int responseValue)
+	{
+		boolean error = false;
+		
+		if(responseValue > -1)
+		{
+			error = false;
+		}
+		else
+		{
+			error = true;
+		}
+		return error;
+	}
+	
+	
 	
 	//Prints a List of All Pets, Used When Presenting Pets for User to Choose From.
 	public void printPetList(Pet[] inputArray)
@@ -105,9 +126,12 @@ public class Clinic
 	//Prints a List of All Doctors, Used When Presenting Doctors for User to Choose From.
 	public void printDoctorList(Doctor[] inputArray)
 	{
-		for(int i = 0; i < nextBlankDoctor(inputArray); i++) 
+		for(int i = 0; i < inputArray.length; i++) 
 		{
-		    System.out.println(inputArray[i].getName());
+		    if(!inputArray[i].getName().equals(""))
+	    	{
+		    	System.out.println(inputArray[i].getName());
+	    	}
 		}
 		System.out.println("Cancel.");
 	}
@@ -441,7 +465,7 @@ public class Clinic
 						{
 							check = 1;
 						}
-						else if (!pets[targetPet].getPetDoctor().equals("No Doctor Assigned") && (errorPet(pets, responsePetAssign))==true) //User has input a valid pet and desired pet already has a doctor assigned.  
+						else if (!pets[targetPet].getPetDoctor().equals("No Doctor Assigned") && (errorCheck(targetPet)==false)) //User has input a valid pet and desired pet already has a doctor assigned.  
 						{
 							while(check3 == 0)
 							{
@@ -493,7 +517,7 @@ public class Clinic
 								}
 							}
 						}
-						else if (errorDoctor(doctors, responseDoctorAssign) == true) //User has input a valid pet name and desired pet does not already have a doctor assigned.
+						else if (errorCheck(targetPet)==false) //User has input a valid pet name and desired pet does not already have a doctor assigned.
 						{
 							while (check2 == 0)
 							{
@@ -530,7 +554,7 @@ public class Clinic
 								}
 							}
 						}	
-						else if (errorPet(pets, responseDoctorAssign) == false)//User has not input a valid pet name. Asks them to try again.
+						else if (errorCheck(targetPet)==true)//User has not input a valid pet name. Asks them to try again.
 						{
 							System.out.println("Cannot find this pet in our system. Please try again.");
 							check = 0;
@@ -554,17 +578,17 @@ public class Clinic
 					{
 						check = 1;
 					}
-					else if(pets[targetPet].getType().equals("Dog") && errorPet(pets, responseAnalyse)==true)//User has input a valid pet name and desired pet is a dog.
+					else if(pets[targetPet].getType().equals("Dog") && errorCheck(targetPet)==false)//User has input a valid pet name and desired pet is a dog.
 					{
 						pets[targetPet].analyseDog();
 						check = 1;
 					}
-					else if(pets[targetPet].getType().equals("Cat")&& errorPet(pets, responseAnalyse)==true)//User has input a valid pet name and desired pet is a cat.
+					else if(pets[targetPet].getType().equals("Cat")&& errorCheck(targetPet)==false)//User has input a valid pet name and desired pet is a cat.
 					{
 						pets[targetPet].analyseCat();
 						check = 1;
 					}
-					else if(errorPet(pets, responseAnalyse)==false) //User has not input a valid pet name. Ask them to try again. 
+					else if(errorCheck(targetPet)==true) //User has not input a valid pet name. Ask them to try again. 
 					{
 						System.out.println("Cannot find this pet in our system. Please try again.");
 						check = 0;
@@ -677,12 +701,12 @@ public class Clinic
 						{
 							check = 1;
 						}
-						else if (errorDoctor(doctors, responsePrintDoctor)==true) //User has input a valid doctor name. Print information for this doctor.
+						else if (errorCheck(targetDoctor)==false) //User has input a valid doctor name. Print information for this doctor.
 						{
 							doctors[targetDoctor].printDoctor();
 							check = 1;
 						}
-						else if (errorDoctor(doctors, responsePrintDoctor)==false)//User has not input a valid doctor name. Ask them to try again.
+						else if (errorCheck(targetDoctor)==true)//User has not input a valid doctor name. Ask them to try again.
 						{
 							System.out.println("Cannot find this doctor in our system.");
 							check = 0;
